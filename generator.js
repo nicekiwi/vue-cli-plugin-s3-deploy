@@ -1,3 +1,5 @@
+const { pluginVersion } = require('./version')
+
 module.exports = (api, options, rootOptions) => {
   api.extendPackage({
     scripts: {
@@ -5,8 +7,9 @@ module.exports = (api, options, rootOptions) => {
     }
   })
 
-  // Override this in a .env file or in vue.config.js
+  // Override these in a .env file or in vue.config.js
   options.uploadConcurrency = 5
+  options.pluginVersion = pluginVersion
 
   api.extendPackage({
     vue: {

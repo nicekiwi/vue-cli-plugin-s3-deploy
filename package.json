@@ -1,6 +1,6 @@
 {
   "name": "vue-cli-plugin-s3-deploy",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "A vue-cli plugin for deploying your built Vue app to an S3 bucket.",
   "keywords": [
     "vue",
@@ -31,6 +31,7 @@
     "@vue/cli-shared-utils": "^3.0.0-rc.3",
     "aws-sdk": "^2.225.1",
     "es6-promise-pool": "^2.5.0",
+    "globby": "^8.0.1",
     "mime-types": "^2.1.18"
   },
   "devDependencies": {
