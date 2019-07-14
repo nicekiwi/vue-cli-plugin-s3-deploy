@@ -16,7 +16,6 @@ module.exports = (api, configOptions) => {
     usage: 'vue-cli-service s3-deploy'
   }, (_) => {
     let options = configOptions.pluginOptions.s3Deploy
-    console.log(JSON.stringify(options))
 
     if (pluginVersion !== options.pluginVersion) {
       error('Configuration is out of date.')
@@ -48,10 +47,13 @@ module.exports = (api, configOptions) => {
     options.cloudfrontId = process.env.VUE_APP_S3D_CLOUDFRONT_ID || options.cloudfrontId
     options.cloudfrontMatchers = process.env.VUE_APP_S3D_CLOUDFRONT_MATCHERS || options.cloudfrontMatchers
 
-    // parse and correct for boolbean vars passed as strings
     Object.keys(options).forEach(key => {
       if (!options[key]) return
 
+      // cleanup pwa file match string and convert to array
+      if (key === 'pwaFiles') options.pwaFiles = options.pwaFiles.replace(/\s/g, '').split(',')
+
+      // parse and correct for boolbean vars passed as strings
       let value = options[key].toString().toLowerCase().trim()
       if (value === 'true') {
         options[key] = true
@@ -62,6 +64,8 @@ module.exports = (api, configOptions) => {
 
     if (!options.bucket) {
       error('Bucket name must be specified with `bucket` in vue.config.js!')
+    } else if (!options.bucket.match(/(?=^.{3,63}$)(?!^(\d+\.)+\d+$)(^(([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9])$)/g)) {
+      error('Bucket name must use only lowercase alpha nummeric characters, dots and hyphens. see https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html')
     } else {
       if (options.pwa && !options.pwaFiles) {
         warn('Option pwa is set but no files specified! Defaulting to: service-worker.js')
