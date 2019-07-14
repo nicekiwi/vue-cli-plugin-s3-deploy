@@ -14,6 +14,11 @@
     "deployment"
   ],
   "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ignore-pattern projects ./",
+    "pretest": "rimraf __tests__/projects/*",
+    "test": "jest --detectOpenHandles"
+  },
   "homepage": "https://github.com/multiplegeorges/vue-cli-plugin-s3-deploy",
   "author": {
     "name": "Georges Gabereau",
@@ -28,5 +33,29 @@
     "es6-promise-pool": "^2.5.0",
     "globby": "^8.0.1",
     "mime-types": "^2.1.18"
+  },
+  "devDependencies": {
+    "@vue/cli": "^3.0.5",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/cli-test-utils": "^3.0.5",
+    "eslint": "^5.8.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "fs-extra": "^7.0.0",
+    "jest": "^23.6.0",
+    "lnk": "^1.1.0",
+    "rimraf": "^2.6.2"
+  },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "aws-sdk/clients/s3": "<rootDir>/__mocks__/aws-sdk-s3",
+      "aws-sdk/clients/cloudfront": "<rootDir>/__mocks__/aws-sdk-cloudfront"
+    }
   }
 }
